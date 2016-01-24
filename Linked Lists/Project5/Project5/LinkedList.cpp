@@ -76,7 +76,7 @@ void LinkedList::deleteValue(int value)
 	}
 }
 
-void LinkedList::deleteNode(int nodenum)
+int LinkedList::getNode(int nodenum)
 {
 	int index = -1;
 
@@ -98,55 +98,33 @@ void LinkedList::deleteNode(int nodenum)
 
 	if (index >= 0)
 	{
-		if (node == first)
-		{
-			first = node->next;
-		}
-		else
-		{
-			prev->next = node->next;
-		}
-
-		delete node;
+		return node->data;
 	}
 }
 
-void LinkedList::insertAfterValue(int value, int num)
+void LinkedList::changeNode(int nodenum, int num)
 {
-	Node *node = new Node();
-	node->data = num;
+	int index = -1;
 
-	// search for node to insert after
-	Node *prev = first;
+	Node *node = first;
+	Node *prev = NULL;
 
-	while (prev != NULL)
+	while (node != NULL)
 	{
-		if (prev->data == value)
+		index++;
+
+		if (index == nodenum)
 		{
 			break;
 		}
 
-		prev = prev->next;
+		prev = node;
+		node = node->next;
 	}
 
-	// insert node into list
-	if (first == NULL)
+	if (index >= 0)
 	{
-		first = node;
-	}
-	else
-	{
-		if (prev != NULL)
-		{
-			node->next = prev->next;
-			prev->next = node;
-		}
-		else
-		{
-			// could not find the node to insert after
-			// so defaulting to Add function
-			addValue(num);
-		}
+		node->data = num;
 	}
 }
 
@@ -154,10 +132,21 @@ ostream& operator<<(ostream& output, LinkedList& list)
 {
 	Node *currNode = list.first;
 
+	int counter = 0; // or odd/even check for direction R/L
 	while (currNode != NULL)
 	{
-		output << "data = " << currNode->data << endl;
+		char direction;
+		if (counter % 2 == 0)
+			direction = 'R';
+		else
+			direction = 'L';
+		
+		if (currNode->data < 10)
+			output << direction << currNode->data << "  ";
+		else 
+			output << direction << currNode->data << " ";
 
+		counter++;
 		currNode = currNode->next;
 	}
 

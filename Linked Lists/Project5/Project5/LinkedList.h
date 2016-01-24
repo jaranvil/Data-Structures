@@ -16,9 +16,9 @@ public:
 
 	void deleteValue(int value);
 
-	void deleteNode(int nodenum);
+	int getNode(int nodenum);
 
-	void insertAfterValue(int value, int num);
+	void changeNode(int nodenum, int num);
 
 };
 
