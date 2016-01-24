@@ -6,10 +6,11 @@ using namespace std;
 class Node
 {
 public:
-	int data;
+	int num;
+	string direction;
 	Node *next;
 
-	Node() : next(NULL), data(-1) {}
+	Node() : next(NULL), num(-1) {}
 };
 
 #endif

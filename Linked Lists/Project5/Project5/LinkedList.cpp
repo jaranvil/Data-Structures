@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// delete list
 LinkedList::~LinkedList()
 {
 	Node *node = first;
@@ -11,17 +12,18 @@ LinkedList::~LinkedList()
 	while (node != NULL)
 	{
 		Node *temp = node;
-
 		node = node->next;
-
 		delete temp;
 	}
 }
 
-void LinkedList::addValue(int num)
+void LinkedList::addValue(int num, string direction)
 {
 	Node *node = new Node();
-	node->data = num;
+
+	// combination direction and value
+	node->num = num;
+	node->direction = direction;
 
 	if (first == NULL)
 	{
@@ -39,44 +41,11 @@ void LinkedList::addValue(int num)
 		}
 
 		if (prevNode != NULL)
-		{
-			prevNode->next = node;
-		}
+			prevNode->next = node;		
 	}
 }
 
-void LinkedList::deleteValue(int value)
-{
-	Node *node = first;
-	Node *prev = NULL;
-
-	while (node != NULL)
-	{
-		if (node->data == value)
-		{
-			break;
-		}
-
-		prev = node;
-		node = node->next;
-	}
-
-	if (node != NULL)
-	{
-		if (node == first)
-		{
-			first = node->next;
-		}
-		else
-		{
-			prev->next = node->next;
-		}
-
-		delete node;
-	}
-}
-
-int LinkedList::getNode(int nodenum)
+int LinkedList::getNodeNum(int nodenum)
 {
 	int index = -1;
 
@@ -98,7 +67,7 @@ int LinkedList::getNode(int nodenum)
 
 	if (index >= 0)
 	{
-		return node->data;
+		return node->num;
 	}
 }
 
@@ -124,7 +93,7 @@ void LinkedList::changeNode(int nodenum, int num)
 
 	if (index >= 0)
 	{
-		node->data = num;
+		node->num = num;
 	}
 }
 
@@ -141,10 +110,10 @@ ostream& operator<<(ostream& output, LinkedList& list)
 		else
 			direction = 'L';
 		
-		if (currNode->data < 10)
-			output << direction << currNode->data << "  ";
+		if (currNode->num < 10)
+			output << direction << currNode->num << "  ";
 		else 
-			output << direction << currNode->data << " ";
+			output << direction << currNode->num << " ";
 
 		counter++;
 		currNode = currNode->next;

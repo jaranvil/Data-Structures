@@ -12,11 +12,9 @@ public:
 
 	virtual ~LinkedList();
 
-	void addValue(int num);
+	void addValue(int, string);
 
-	void deleteValue(int value);
-
-	int getNode(int nodenum);
+	int getNodeNum(int nodenum);
 
 	void changeNode(int nodenum, int num);
 
