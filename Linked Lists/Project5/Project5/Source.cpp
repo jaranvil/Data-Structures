@@ -4,7 +4,6 @@
 #include <regex>
 #include <windows.h> // for color
 #include <fstream> // for file IO
-#include <string> // for getline() input method
 
 #include "LinkedList.h"
 #include "Node.h"
@@ -278,6 +277,7 @@ void reset()
 	{
 		list.changeNode(i, 0);
 	}
+	currentPosition = 0;
 	refreshScreen();
 }
 

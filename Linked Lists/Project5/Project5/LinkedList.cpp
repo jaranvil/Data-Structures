@@ -26,9 +26,7 @@ void LinkedList::addValue(int num, string direction)
 	node->direction = direction;
 
 	if (first == NULL)
-	{
 		first = node;
-	}
 	else
 	{
 		Node *currNode = first;
@@ -57,18 +55,14 @@ int LinkedList::getNodeNum(int nodenum)
 		index++;
 
 		if (index == nodenum)
-		{
 			break;
-		}
 
 		prev = node;
 		node = node->next;
 	}
 
 	if (index >= 0)
-	{
 		return node->num;
-	}
 }
 
 void LinkedList::changeNode(int nodenum, int num)
@@ -83,18 +77,14 @@ void LinkedList::changeNode(int nodenum, int num)
 		index++;
 
 		if (index == nodenum)
-		{
 			break;
-		}
 
 		prev = node;
 		node = node->next;
 	}
 
 	if (index >= 0)
-	{
 		node->num = num;
-	}
 }
 
 ostream& operator<<(ostream& output, LinkedList& list)
