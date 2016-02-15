@@ -11,12 +11,15 @@ private:
 	StackNode *_next;
 
 public:
+	
+
 	StackNode();
-	StackNode(int data, StackNode* next);
+	StackNode(int, int, bool, StackNode* next);
 	virtual ~StackNode();
 
-	int getData();
-	void setData(int data);
+	int getRow();
+	int getCol();
+	bool isBranch();
 
 	StackNode* getNext();
 	void setNext(StackNode *next);

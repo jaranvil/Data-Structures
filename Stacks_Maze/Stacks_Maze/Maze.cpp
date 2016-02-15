@@ -33,8 +33,8 @@ void Maze::loadMaze(string filePath)
 
 	std::ifstream file("maze.txt");
 	std::string line;
-
-	char charArray[51][51];
+	rows = 51;
+	cols = 51;
 	int row = 0;
 	int col = 0;
 
@@ -57,27 +57,48 @@ void Maze::loadMaze(string filePath)
 		
 	}
 	
-	// draw maze from array
-	
+
+		
+}
+
+void Maze::draw()
+{
+	system("cls");
+
+	//StackNode *node = stack._top;
+
+	//while (node != NULL)
+	//{
+	//	charArray[node->getRow()][node->getCol()] = '#';
+	//	node = node->getNext();
+	//}
+
 	for (int r = 0; r < 51; r++)
 	{
 		for (int c = 0; c < 51; c++)
 		{
-			//cout << charArray[r][c];
-			
-			if (maze[r][c])
-				cout << "*";
+			cout << charArray[r][c];
+
+			/*	if (maze[r][c])
+			cout << "*";
 			else
-				cout << " ";
-				//if (r == 50 && c == 50)
-				//_getch();
+			cout << " ";*/
 		}
-			
+
 		cout << endl;
 	}
-	
-	
-		
+}
+
+void Maze::clearPath()
+{
+	for (int r = 0; r < 51; r++)
+	{
+		for (int c = 0; c < 51; c++)
+		{
+			if (charArray[r][c] == '#')
+				charArray[r][c] = ' ';
+		}
+	}
 }
 
 bool Maze::getVal(int row, int col)

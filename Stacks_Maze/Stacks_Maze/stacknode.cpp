@@ -1,14 +1,15 @@
 //#include "stdafx.h"
 #include <iostream>
 #include "stacknode.h"
+#include "Maze.h"
 
 using namespace std;
 
-StackNode::StackNode() : _data(0), _next(NULL)
+StackNode::StackNode() 
 {
 }
 
-StackNode::StackNode(int data, StackNode* next) : _data(data), _next(next)
+StackNode::StackNode(int _row, int _col, bool _branch, StackNode* next) : row(_row), col(_col), branch(_branch), _next(next)
 {
 }
 
@@ -16,14 +17,19 @@ StackNode::~StackNode()
 {
 }
 
-int StackNode::getData()
+int StackNode::getRow()
 {
-	return _data;
+	return row;
 }
 
-void StackNode::setData(int data)
+int StackNode::getCol()
 {
-	_data = data;
+	return col;
+}
+
+bool StackNode::isBranch()
+{
+	return branch;
 }
 
 StackNode* StackNode::getNext()
@@ -35,3 +41,5 @@ void StackNode::setNext(StackNode *next)
 {
 	_next = next;
 }
+
+

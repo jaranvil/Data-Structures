@@ -18,15 +18,48 @@ Stack::~Stack()
 	}
 }
 
-myerror_code Stack::Push(int num)
+myerror_code Stack::Push(int row, int col, bool branch)
 {
-	_top = new StackNode(num, _top);
+	_top = new StackNode(row, col, branch, _top);
 	return(success);
 }
 
-int Stack::Peek()
+int Stack::PeekRow()
 {
-	return _top->getData();
+	return _top->getRow();
+}
+
+int Stack::PeekCol()
+{
+	return _top->getCol();
+}
+
+int Stack::PeekPrevRow()
+{
+	if (_top->getNext())
+	{
+		return _top->getNext()->getRow();
+	}
+	else
+		return 0;
+}
+
+int Stack::PeekPrevCol()
+{
+	if (_top->getNext())
+	{
+		return _top->getNext()->getCol();
+	}
+	else
+		return 0;
+}
+
+void Stack::ReturnToBranch()
+{
+	while (_top != NULL && _top->isBranch())
+	{
+		Pop();
+	}
 }
 
 myerror_code Stack::Pop()
@@ -49,7 +82,7 @@ ostream& operator<<(ostream& output, Stack& stack)
 
 	while (node != NULL)
 	{
-		cout << node->getData() << endl;
+		cout << node->getRow() << ", " << node->getCol() << endl;
 		node = node->getNext();
 	}
 

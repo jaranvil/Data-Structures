@@ -9,16 +9,19 @@ using namespace std;
 enum myerror_code { success, underflow, overflow };
 
 class Stack
-{
-private:
+{	
+public:
 	StackNode *_top;
 
-public:
 	Stack();
 	virtual ~Stack();
 
-	myerror_code Push(int num);
-	int Peek();
+	myerror_code Push(int, int, bool);
+	int PeekRow();
+	int PeekCol();
+	int PeekPrevRow();
+	int PeekPrevCol();
+	void ReturnToBranch();
 	myerror_code Pop();
 
 	friend ostream& operator<<(ostream& output, Stack& stack);
