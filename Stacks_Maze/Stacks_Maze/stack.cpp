@@ -54,9 +54,11 @@ int Stack::PeekPrevCol()
 		return 0;
 }
 
+
+
 void Stack::ReturnToBranch()
 {
-	while (_top != NULL && _top->isBranch())
+	while (_top != NULL && !_top->isBranch())
 	{
 		Pop();
 	}

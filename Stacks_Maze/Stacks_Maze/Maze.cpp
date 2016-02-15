@@ -4,6 +4,7 @@
 #include <string>    
 #include <iostream>
 #include <fstream>      
+#include <windows.h> // for color
 #include "Maze.h"
 
 using namespace std;
@@ -31,7 +32,7 @@ void Maze::loadMaze(string filePath)
 
 	// TODO - get deminsions
 
-	std::ifstream file("maze.txt");
+	std::ifstream file("maze2.txt");
 	std::string line;
 	rows = 51;
 	cols = 51;
@@ -64,6 +65,10 @@ void Maze::loadMaze(string filePath)
 void Maze::draw()
 {
 	system("cls");
+	HANDLE  hConsole;
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	
 
 	//StackNode *node = stack._top;
 
@@ -77,6 +82,11 @@ void Maze::draw()
 	{
 		for (int c = 0; c < 51; c++)
 		{
+			if (charArray[r][c] == 'B')
+				SetConsoleTextAttribute(hConsole, 3);
+			else
+				SetConsoleTextAttribute(hConsole, 7);
+
 			cout << charArray[r][c];
 
 			/*	if (maze[r][c])

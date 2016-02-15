@@ -21,6 +21,7 @@ public:
 	int PeekCol();
 	int PeekPrevRow();
 	int PeekPrevCol();
+	int PeekBranch();
 	void ReturnToBranch();
 	myerror_code Pop();
 

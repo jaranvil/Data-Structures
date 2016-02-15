@@ -7,11 +7,12 @@ class StackNode
 private:
 	int row;
 	int col;
-	bool branch;
+	
 	StackNode *_next;
 
 public:
-	
+	int branchDirection = 0;
+	bool branch;
 
 	StackNode();
 	StackNode(int, int, bool, StackNode* next);
