@@ -39,26 +39,52 @@ void Maze::loadMaze(string filePath)
 	int row = 0;
 	int col = 0;
 
-	while (std::getline(file, line, '\0')) {
-		for (char character : line) {
-			charArray[row][col] = character;	
-
-			if (character == ' ')
-				maze[row][col] = false;
-			else
-				maze[row][col] = true;
-
-			col++;
-			if (col == 52)
-			{
-				++row;
-				col = 0;
-			}
-		}
-		
-	}
 	
 
+	//  COUNT DEMENSIONS
+
+	ifstream inFile("maze.txt");
+
+
+	int temp = 0;
+	int temp2 = 0;
+
+	while (getline(inFile, line)) {
+
+		temp++;
+
+		char tab2[1024];
+		strcpy_s(tab2, line.c_str());
+
+		temp2 = strlen(tab2);
+	}
+	
+	cout << temp << temp2 << endl;
+	_getch();
+
+	// POPULATE ARRAY
+
+	// WORKING with fixed demensions
+	/*while (std::getline(file, line, '\0'))
+	{
+	for (char character : line)
+	{
+	charArray[row][col] = character;
+
+	if (character == ' ')
+	maze[row][col] = false;
+	else
+	maze[row][col] = true;
+
+	col++;
+	if (col == 52)
+	{
+	++row;
+	col = 0;
+	}
+	}
+
+	}*/
 		
 }
 
