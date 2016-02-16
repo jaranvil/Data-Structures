@@ -10,18 +10,17 @@ using namespace std;
 class Maze
 {
 private:
-	bool maze[51][51];
-	
+	bool** maze;
 
 public:
-	char charArray[51][51];
+	char** charArray;
 	int rows;
 	int cols;
 
 	Maze();
 	virtual ~Maze();
 
-	void loadMaze(string);
+	void loadMaze(int);
 	void draw();
 	void clearPath();
 

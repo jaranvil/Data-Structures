@@ -17,11 +17,13 @@ public:
 	virtual ~Stack();
 
 	myerror_code Push(int, int, bool);
+
 	int PeekRow();
 	int PeekCol();
 	int PeekPrevRow();
 	int PeekPrevCol();
 	int PeekBranch();
+
 	void ReturnToBranch();
 	myerror_code Pop();
 

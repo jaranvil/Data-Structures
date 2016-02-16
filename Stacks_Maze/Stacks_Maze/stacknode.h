@@ -5,10 +5,9 @@
 class StackNode
 {
 private:
-	int row;
-	int col;
-	
 	StackNode *_next;
+	int row;
+	int col;		
 
 public:
 	int branchDirection = 0;

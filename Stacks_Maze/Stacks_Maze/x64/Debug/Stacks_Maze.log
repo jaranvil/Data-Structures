@@ -1,0 +1,5 @@
+﻿  Source.cpp
+  Maze.cpp
+Maze.cpp(50): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+  Stacks_Maze.vcxproj -> H:\Repos\Data-Structures\Stacks_Maze\x64\Debug\Stacks_Maze.exe

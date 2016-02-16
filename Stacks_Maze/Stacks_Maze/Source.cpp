@@ -1,9 +1,6 @@
-//#include "stdafx.h"
-
 #include <iostream>
 #include "stack.h"
 #include "Maze.h"
-
 
 using namespace std;
 
@@ -36,11 +33,16 @@ bool moveDetermined = false;
 
 int main()
 {
-	maze.loadMaze("");
+	cout << "Select a maze: (1-5)" << endl;
+	int choice;
+	cin >> choice; 
+	maze.loadMaze(choice);
 
+	// starting position
 	currentRow = 1;
 	currentCol = 0;
 
+	// push start position to stack
 	bool branch = isBranch(maze, currentRow, currentCol, -1, -1);
 	stack.Push(currentRow, currentCol, branch);
 
@@ -58,8 +60,8 @@ int main()
 			node = node->getNext();
 		}
 		maze.draw();*/
-		system("cls");
-		cout << currentRow << " " << currentCol << endl;
+		//system("cls");
+		//cout << currentRow << " " << currentCol << endl;
 
 		moveDetermined = false;
 
@@ -69,14 +71,12 @@ int main()
 			if (node->branchDirection == 0 && !moveDetermined)
 			{
 				node->branchDirection = 1;
-				tryToMoveRight();
-			
+				tryToMoveRight();			
 			}	
 			if (node->branchDirection == 1 && !moveDetermined)
 			{
 				node->branchDirection = 2;
-				tryToMoveDown();
-				
+				tryToMoveDown();				
 			}				
 			if (node->branchDirection == 2 && !moveDetermined)
 			{
@@ -88,12 +88,9 @@ int main()
 				node->branchDirection = 4;
 				tryToMoveUp();
 			}
-
 				
 			if (!moveDetermined)
 				node->branch = false;
-			
-
 		}
 		else
 		{
@@ -102,7 +99,6 @@ int main()
 			tryToMoveLeft();
 			tryToMoveUp();
 			
-
 		} // end !node is branch
 
 		if (!moveDetermined)
@@ -115,10 +111,10 @@ int main()
 			currentCol = stack.PeekCol();
 
 			// clear out hashes on the drawing array
-			maze.clearPath();
+			//maze.clearPath();
 		}			
 
-		if (currentRow >= 49 && currentCol >= 49)
+		if (currentRow >= maze.rows - 2 && currentCol >= maze.cols -2)
 		{
 			while (node != NULL)
 			{
@@ -131,48 +127,10 @@ int main()
 			maze.draw(); 
 
 			break;
+			
 		}
 			
 	} // end while
-
-	_getch();
-
-	//// test 1: push on to stack
-	//Stack stack;
-	//Stack stack2; // use this one just to force errors
-
-	//myerror_code err;
-
-	//err = stack.Push(32);
-	//if (err != success) pr_error(err); // just a sample of catching a returning error code
-	//stack.Push(12);
-	//stack.Push(87);
-	//stack.Push(26);
-	//stack.Push(91);
-
-	//// verify contents of stack
-	//cout << stack;
-
-	//// test 2: peek/pop from stack
-	//cout << "The first node on the stack is: ";
-	//cout << stack.Peek() << endl;
-
-	//// remove the first node
-	//cout << "First node removed." << endl;
-	//stack.Pop();
-
-	//// show new top of stack
-	//cout << "The new first node on the stack is: ";
-	//cout << stack.Peek() << endl;
-	//cin.ignore();
-
-	//// Now going to force an underflow error with stack2
-	//// There is no data, so a Pop should fail
-	//err = stack2.Pop();
-	//if (err != success) pr_error(err); // just a sample of catching a returning error code
-
-	//cout << "Ending..." << endl;
-	//cin.ignore();
 
 	_getch();
 	return 0;
@@ -195,7 +153,7 @@ void tryToMoveRight()
 				stack.Push(currentRow, currentCol, branch);
 
 				moveDetermined = true;
-				cout << "Moving right" << endl;
+				
 			}
 		}
 	}
@@ -217,7 +175,7 @@ void tryToMoveDown()
 				stack.Push(currentRow, currentCol, branch);
 
 				moveDetermined = true;
-				cout << "Moving down" << endl;
+				
 			}
 		}
 	}
@@ -239,7 +197,7 @@ void tryToMoveLeft()
 				stack.Push(currentRow, currentCol, branch);
 
 				moveDetermined = true;
-				cout << "Moving left" << endl;
+				
 			}
 		}
 	}
@@ -261,7 +219,7 @@ void tryToMoveUp()
 				stack.Push(currentRow, currentCol, branch);
 
 				moveDetermined = true;
-				cout << "Moving up" << endl;
+				
 			}
 		}
 	}

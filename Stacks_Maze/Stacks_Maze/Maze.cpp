@@ -15,76 +15,73 @@ Maze::Maze()
 
 Maze::~Maze()
 {
+
 }
 
-void Maze::loadMaze(string filePath)
+void Maze::loadMaze(int mazeChoice)
 {
-	// outputing a file
+	string filename = "";
+	if (mazeChoice == 1)
+		filename = "maze.txt";
+	if (mazeChoice == 2)
+		filename = "maze2.txt";
+	if (mazeChoice == 3)
+		filename = "maze3.txt";
+	if (mazeChoice == 4)
+		filename = "maze4.txt";
+	if (mazeChoice == 5)
+		filename = "mazex.txt";
 
-	//ofstream outputFile;
-	//outputFile.open("temp.txt");
-	//outputFile << 0;
-	//outputFile << 0;
-	//outputFile << 0;
-	//outputFile << 0;
-	//outputFile.close();
-
-
-	// TODO - get deminsions
-
-	std::ifstream file("maze2.txt");
+	std::ifstream file(filename);
 	std::string line;
-	rows = 51;
-	cols = 51;
 	int row = 0;
 	int col = 0;
 
-	
-
 	//  COUNT DEMENSIONS
+	rows = 0;
+	cols = 0;
+	while (getline(file, line)) {
 
-	ifstream inFile("maze.txt");
-
-
-	int temp = 0;
-	int temp2 = 0;
-
-	while (getline(inFile, line)) {
-
-		temp++;
+		rows++;
 
 		char tab2[1024];
 		strcpy_s(tab2, line.c_str());
 
-		temp2 = strlen(tab2);
+		cols = strlen(tab2);
 	}
-	
-	cout << temp << temp2 << endl;
-	_getch();
+
+	maze = new bool*[rows];
+	for (int i = 0; i < rows; i++)
+		maze[i] = new bool[cols];
+
+	charArray = new char*[rows];
+	for (int i = 0; i < rows; i++)
+		charArray[i] = new char[cols];
 
 	// POPULATE ARRAY
 
-	// WORKING with fixed demensions
-	/*while (std::getline(file, line, '\0'))
-	{
-	for (char character : line)
-	{
-	charArray[row][col] = character;
 
-	if (character == ' ')
-	maze[row][col] = false;
-	else
-	maze[row][col] = true;
-
-	col++;
-	if (col == 52)
+	std::ifstream inFile(filename);
+	while (std::getline(inFile, line, '\0'))
 	{
-	++row;
-	col = 0;
+		for (char character : line)
+		{
+			charArray[row][col] = character;
+
+			if (character == ' ')
+				maze[row][col] = false;
+			else
+				maze[row][col] = true;
+
+			col++;
+			if (col > cols)
+			{
+				++row;
+				col = 0;
+			}
+			
+		}
 	}
-	}
-
-	}*/
 		
 }
 
@@ -104,14 +101,14 @@ void Maze::draw()
 	//	node = node->getNext();
 	//}
 
-	for (int r = 0; r < 51; r++)
+	for (int r = 0; r < rows; r++)
 	{
-		for (int c = 0; c < 51; c++)
+		for (int c = 0; c < cols; c++)
 		{
 			if (charArray[r][c] == 'B')
-				SetConsoleTextAttribute(hConsole, 3);
+				SetConsoleTextAttribute(hConsole, 6);
 			else
-				SetConsoleTextAttribute(hConsole, 7);
+				SetConsoleTextAttribute(hConsole, 8);
 
 			cout << charArray[r][c];
 
