@@ -4,12 +4,40 @@ using namespace std;
 
 Tree::Tree()
 {
-	root = NULL;   // Initialize root to NULL
+	root = NULL;   
 }
 
 Tree::~Tree()
 {
 	ClearTree(root);
+}
+
+void Tree::find(string target, Node *node)
+{
+	
+	if (node == NULL)
+	{
+		if (target != "")
+			cout << "Misspelled: " << target << endl;
+	}
+	else
+	{
+		if (target < node->key)
+		{
+			find(target, node->left);
+		}
+		else
+		{
+			if (target > node->key)
+			{
+				find(target, node->right);
+			}
+			else
+			{
+				//cout << "Element found!" << endl;
+			}
+		}
+	}
 }
 
 void Tree::ClearTree(Node *n)
@@ -36,12 +64,11 @@ void Tree::Insert(Node *newNode)
 		root = newNode;
 		return;
 	}
-	// Tree is not empty so search for place to insert
+
 	while (temp != NULL) // Loop till temp falls out of the tree 
 	{
 		back = temp;
-		// Mark ancestor that will be out of balance after
-		//   this node is inserted
+
 		if (temp->balanceFactor != '=')
 			ancestor = temp;
 		if (newNode->key < temp->key)
@@ -49,9 +76,7 @@ void Tree::Insert(Node *newNode)
 		else
 			temp = temp->right;
 	}
-	// temp is now NULL
-	// back points to parent node to attach newNode to
-	// ancestor points to most recent out of balance ancestor
+
 
 	newNode->parent = back;   // Set parent
 	if (newNode->key < back->key)  // Insert at left
@@ -63,78 +88,59 @@ void Tree::Insert(Node *newNode)
 		back->right = newNode;
 	}
 
-	// Now call function to restore the tree's AVL property
-	restore(ancestor, newNode);
+	
+	//restore(ancestor, newNode);
 }
 
 void Tree::restore(Node *ancestor, Node *newNode)
 {
 
-	// Case 1: ancestor is NULL, i.e. balanceFactor of all ancestors' is '='
+	// ancestor is NULL, i.e. balanceFactor of all ancestors' is '='
 
 	if (ancestor == NULL)
 	{
-		if (newNode->key < root->key)       // newNode inserted to left of root
+		if (newNode->key < root->key)      
 			root->balanceFactor = 'L';
 		else
-			root->balanceFactor = 'R';   // newNode inserted to right of root
-										 // Adjust the balanceFactor for all nodes from newNode back up to root
+			root->balanceFactor = 'R';   
+									
 		adjustBalanceFactors(root, newNode);
 	}
-
-	// Case 2: Insertion in opposite subtree of ancestor's balance factor, i.e.
-	//  ancestor.balanceFactor = 'L' AND  Insertion made in ancestor's right subtree
-	//     OR
-	//  ancestor.balanceFactor = 'R' AND  Insertion made in ancestor's left subtree
 
 	else if (((ancestor->balanceFactor == 'L') && (newNode->key > ancestor->key)) ||
 		((ancestor->balanceFactor == 'R') && (newNode->key < ancestor->key)))
 	{
 		ancestor->balanceFactor = '=';
-		// Adjust the balanceFactor for all nodes from newNode back up to ancestor
+		
 		adjustBalanceFactors(ancestor, newNode);
 	}
 
-
-	// Case 3: ancestor.balanceFactor = 'R' and the node inserted is
-	//      in the right subtree of ancestor's right child
-
 	else if ((ancestor->balanceFactor == 'R') && (newNode->key > ancestor->right->key))
 	{
-		ancestor->balanceFactor = '='; // Reset ancestor's balanceFactor
-		rotateLeft(ancestor);       // Do single left rotation about ancestor
-									// Adjust the balanceFactor for all nodes from newNode back up to ancestor's parent
+		ancestor->balanceFactor = '='; 
+		rotateLeft(ancestor);       
+									
 		adjustBalanceFactors(ancestor->parent, newNode);
 	}
 
 
-	// Case 4: ancestor.balanceFactor is 'L' and the node inserted is
-	//      in the left subtree of ancestor's left child
 
 	else if ((ancestor->balanceFactor == 'L') && (newNode->key < ancestor->left->key))
 	{
-		ancestor->balanceFactor = '='; // Reset ancestor's balanceFactor
-		rotateRight(ancestor);       // Do single right rotation about ancestor
-									 // Adjust the balanceFactor for all nodes from newNode back up to ancestor's parent
+		ancestor->balanceFactor = '='; 
+		rotateRight(ancestor);       
+								
 		adjustBalanceFactors(ancestor->parent, newNode);
 	}
 
 
-	// Case 5: ancestor.balanceFactor is 'L' and the node inserted is
-	//      in the right subtree of ancestor's left child
-
 	else if ((ancestor->balanceFactor == 'L') && (newNode->key > ancestor->left->key))
 	{
-		// Perform double right rotation (actually a left followed by a right)
 		rotateLeft(ancestor->left);
 		rotateRight(ancestor);
 		// Adjust the balanceFactor for all nodes from newNode back up to ancestor
 		adjustLeftRight(ancestor, newNode);
 	}
-
-
-	// Case 6: ancestor.balanceFactor is 'R' and the node inserted is 
-	//      in the left subtree of ancestor's right child
 
 	else
 	{
@@ -145,11 +151,6 @@ void Tree::restore(Node *ancestor, Node *newNode)
 	}
 }
 
-
-// Adjust the balance factor in all nodes from the inserted node's
-//   parent back up to but NOT including a designated end node.
-// @param end– last node back up the tree that needs adjusting
-// @param start – node just inserted 
 
 void Tree::adjustBalanceFactors(Node *end, Node *start)
 {
@@ -167,61 +168,47 @@ void Tree::adjustBalanceFactors(Node *end, Node *start)
 }
 
 
-// rotateLeft()
-// Perform a single rotation left about n.  This will rotate n's
-//   parent to become n's left child.  Then n's left child will
-//   become the former parent's right child.
+
 
 void Tree::rotateLeft(Node *n)
 {
-	Node *temp = n->right;   //Hold pointer to n's right child
-	n->right = temp->left;      // Move temp 's left child to right child of n
-	if (temp->left != NULL)      // If the left child does exist
+	Node *temp = n->right;  
+	n->right = temp->left;      
+	if (temp->left != NULL)      
 		temp->left->parent = n;// Reset the left child's parent
-	if (n->parent == NULL)       // If n was the root
+	if (n->parent == NULL)     
 	{
 		root = temp;      // Make temp the new root
 		temp->parent = NULL;   // Root has no parent
 	}
 	else if (n->parent->left == n) // If n was the left child of its' parent
 		n->parent->left = temp;   // Make temp the new left child
-	else               // If n was the right child of its' parent
+	else              
 		n->parent->right = temp;// Make temp the new right child
 
-	temp->left = n;         // Move n to left child of temp
+	temp->left = n;      
 	n->parent = temp;         // Reset n's parent
 }
-
-
-// rotateRight()
-// Perform a single rotation right about n.  This will rotate n's
-//   parent to become n's right child.  Then n's right child will
-//   become the former parent's left child.
 
 void Tree::rotateRight(Node *n)
 {
 	Node *temp = n->left;   //Hold pointer to temp
-	n->left = temp->right;      // Move temp's right child to left child of n
-	if (temp->right != NULL)      // If the right child does exist
-		temp->right->parent = n;// Reset right child's parent
+	n->left = temp->right;    
+	if (temp->right != NULL)      
+		temp->right->parent = n;
 	if (n->parent == NULL)       // If n was root
 	{
-		root = temp;      // Make temp the root
-		temp->parent = NULL;   // Root has no parent
+		root = temp;     
+		temp->parent = NULL;   
 	}
-	else if (n->parent->left == n) // If was the left child of its' parent
-		n->parent->left = temp;   // Make temp the new left child
-	else               // If n was the right child of its' parent
-		n->parent->right = temp;// Make temp the new right child
+	else if (n->parent->left == n) 
+		n->parent->left = temp;  
+	else             
+		n->parent->right = temp;
 
 	temp->right = n;         // Move n to right child of temp
 	n->parent = temp;         // Reset n's parent
 }
-
-
-// adjustLeftRight()
-// @param end- last node back up the tree that needs adjusting
-// @param start - node just inserted 
 
 void Tree::adjustLeftRight(Node *end, Node *start)
 {
@@ -281,7 +268,7 @@ void Tree::Print(Node *n)
 {
 	if (n != NULL)
 	{
-		cout << n->word << " id: " << n->key << " balance: " << n->balanceFactor << "\n";
+		cout << " key: " << n->key << " balance: " << n->balanceFactor << "\n";
 
 		if (n->left != NULL)
 		{
@@ -307,4 +294,6 @@ void Tree::Print(Node *n)
 			cout << "\t right subtree is empty\n";
 		}
 	}
+
+	
 }

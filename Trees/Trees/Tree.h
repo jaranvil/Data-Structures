@@ -7,8 +7,8 @@ using namespace std;
 
 struct Node
 {
-	int key;
-	string word;
+	//int key;
+	string key;
 	Node *left;
 	Node *right;
 	Node *parent;
@@ -18,9 +18,10 @@ struct Node
 class Tree
 {
 private:
-	Node   *root;
+	
 
 public:
+	Node   *root;
 	Tree();            // Constructor
 	~Tree();           // Destructor
 	void Insert(Node *n);
@@ -31,6 +32,7 @@ public:
 	void adjustLeftRight(Node *end, Node *start);
 	void adjustRightLeft(Node *end, Node *start);
 	void PrintTree();
+	void find(string target, Node *node);
 private:
 	void ClearTree(Node *n);
 	void Print(Node *n);

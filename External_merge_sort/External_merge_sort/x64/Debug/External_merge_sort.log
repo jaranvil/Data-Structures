@@ -1,0 +1,4 @@
+﻿  Source.cpp
+Source.cpp(21): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+Source.cpp(42): warning C4244: 'initializing' : conversion from 'time_t' to 'int', possible loss of data
+  External_merge_sort.vcxproj -> \\nsccdtfs4\students\W0269431\Repos\Data-Structures\External_merge_sort\x64\Debug\External_merge_sort.exe
